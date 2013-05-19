@@ -1,23 +1,21 @@
 <?php
 require('smartfilter.class.php');
 
-$key = 'key goes here';
-$whitelist = 'whitelist goes here';
-$input = 'the <script>alert("quick brown fox");</script> jumps over the lazy dog';
+$api_key = 'api key goes here';
+$rule_key = 'rule key goes here';
+$input = 'the <script>alert("quick brown fox");</script> jumps over the lazy dog & mouse';
 
-$smartfilter = new SmartFilter($key);
+$smartfilter = new SmartFilter($api_key);
 
 try {
   // Verify (returns a boolean)
   var_dump($smartfilter->verify());
   // Info (returns an associative array with the goodies)
   var_dump($smartfilter->info());
-  // Verify whitelist (returns a boolean)
-  var_dump($smartfilter->verify_whitelist($whitelist));
-  // Detect (returns an associative array with the goodies)
-  var_dump($smartfilter->detect($input, $whitelist));
+  // Verify rule (returns a boolean)
+  var_dump($smartfilter->verify_rule($rule_key));
   // Filter (returns an associative array with the goodies)
-  var_dump($smartfilter->filter($input, $whitelist));
+  var_dump($smartfilter->filter($input, $rule_key));
 }
 catch(SmartFilterNetworkException $e) {
     echo "Network connectivity issue\n";

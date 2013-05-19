@@ -53,11 +53,11 @@ class SmartFilter {
         return array();
     }
 
-    // Endpoint: /whitelist/verify
-    function verify_whitelist($whitelist) {
+    // Endpoint: /rule/verify
+    function verify_rule($rule_key) {
         try {
             $response = Requests::get(
-                $this->base . '/whitelist/verify?api_key=' . $this->key . '&whitelist_id=' . $whitelist, 
+                $this->base . '/rule/verify?api_key=' . $this->key . '&rule_key=' . $rule_key, 
                 array('Accept' => 'application/json')
             );
         }
@@ -71,34 +71,13 @@ class SmartFilter {
         return false;
     }
 
-    // Endpoint: /xss/detect
-    function detect($input, $whitelist) {
-        try {
-            $response = Requests::post(
-                $this->base . '/xss/detect',
-                array('Accept' => 'application/json'),
-                array('api_key' => $this->key, 'input' => $input, 'whitelist_id' => $whitelist)
-            );
-        }
-        catch (Requests_Exception $e) {
-            throw new SmartFilterNetworkException($e);
-        }
-        if ($response->status_code == 200) { return json_decode($response->body, true); }
-        if ($response->status_code == 400) { throw new SmartFilterBadInputParameter(); }
-        if ($response->status_code == 403) { throw new SmartFilterBadAPIKey(); }
-        if ($response->status_code == 413) { throw new SmartFilterRequestTooLarge(); }
-        if ($response->status_code == 500) { throw new SmartFilterInternalError(); }
-        if ($response->status_code == 507) { throw new SmartFilterAccountQuotaExceeded(); }
-        return array();
-    }
-
     // Endpoint: /xss/filter
-    function filter($input, $whitelist) {
+    function filter($input, $rule_key) {
         try {
             $response = Requests::post(
                 $this->base . '/xss/filter',
                 array('Accept' => 'application/json'),
-                array('api_key' => $this->key, 'input' => $input, 'whitelist_id' => $whitelist)
+                array('api_key' => $this->key, 'input' => $input, 'rule_key' => $rule_key)
             );
         }
         catch (Requests_Exception $e) {
