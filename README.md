@@ -18,7 +18,7 @@ To get started:
 
 3) Edit example.php - you will want to put in your API key and rule key
 
-4) Run example.php
+4) Run `php example.php`
 
 ## Issues
 
