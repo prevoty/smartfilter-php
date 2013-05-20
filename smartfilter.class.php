@@ -14,7 +14,7 @@ class SmartFilter {
     
     function __construct($key) {
         $this->key = $key;
-        $this->base = 'http://api.prevoty.com/1';
+        $this->base = 'https://api.prevoty.com/1';
     }
 
     // Endpoint: /key/verify
